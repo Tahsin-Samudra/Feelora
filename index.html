@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feelora — write what you feel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="page">
+
+  <header>
+    <svg class="logo-mark" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Feelora logo">
+      <defs>
+        <linearGradient id="dropGrad" x1="8" y1="4" x2="56" y2="60" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#3F8A7A"/>
+          <stop offset="1" stop-color="#1D3B36"/>
+        </linearGradient>
+      </defs>
+      <path d="M32 4C32 4 12 28.5 12 41.5C12 53.37 20.95 60 32 60C43.05 60 52 53.37 52 41.5C52 28.5 32 4 32 4Z" fill="url(#dropGrad)"/>
+      <path d="M20 40C24 34 28 46 32 40C36 34 40 46 44 40" stroke="#EAF2EF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    </svg>
+    <h1 class="wordmark">Feelora</h1>
+    <p class="tagline">a quiet place to put your feelings into words</p>
+  </header>
+
+  <nav class="moods" id="moods">
+    <button class="mood-btn" data-mood="sad">Sad</button>
+    <button class="mood-btn" data-mood="happy">Happy</button>
+    <button class="mood-btn" data-mood="broken">Broken</button>
+    <button class="mood-btn" data-mood="empty">Empty</button>
+  </nav>
+
+  <div class="feed-shell">
+    <div class="feed-shell-inner" style="position:relative;">
+      <div class="feed" id="feed"></div>
+    </div>
+  </div>
+
+  <footer>Feelora · every entry is a small honesty</footer>
+</div>
+
+<script>
+  const posts = [
+    { mood:"sad", icon:"🌧️", title:"The apartment feels too big now", excerpt:"I keep setting two cups down out of habit. It's been four months and the coffee maker still thinks there are two of us.", author:"wilted.jay", time:"4h ago", read:"2 min" },
+    { mood:"happy", icon:"🌻", title:"My mother laughed today", excerpt:"A real one, the kind that shows her chipped tooth. I recorded eleven seconds of it and I'm not deleting this phone ever.", author:"marigold_r", time:"6h ago", read:"1 min" },
+    { mood:"broken", icon:"🕳️", title:"I said I was fine in three languages", excerpt:"None of them were true. I'm getting good at translating a lie so it sounds like small talk.", author:"quiet.static", time:"9h ago", read:"3 min" },
+    { mood:"empty", icon:"🫧", title:"Nothing happened today, and that's the entry", excerpt:"I watched the ceiling fan for eleven minutes. Not sad. Not fine. Just a room with me in it.", author:"greylight", time:"12h ago", read:"1 min" },
+    { mood:"happy", icon:"🌼", title:"He remembered the small thing", excerpt:"I mentioned once, months ago, that I liked the yellow ones. He showed up with the yellow ones.", author:"softbloom", time:"1d ago", read:"2 min" },
+    { mood:"sad", icon:"🌫️", title:"Packing up her handwriting", excerpt:"Fourteen recipe cards, and I can already tell which ones she rewrote because the first one turned out wrong.", author:"paperlantern", time:"1d ago", read:"3 min" },
+    { mood:"broken", icon:"🪞", title:"I don't recognize the version from the photos", excerpt:"She was laughing in every single one. I don't remember agreeing to be her.", author:"faded.frame", time:"2d ago", read:"2 min" },
+    { mood:"empty", icon:"🌙", title:"3am and no particular reason", excerpt:"Not insomnia. Not grief. Just awake, the way a light stays on in a room nobody's using.", author:"nocturne.k", time:"2d ago", read:"1 min" },
+    { mood:"happy", icon:"🍋", title:"First swim of the year", excerpt:"The lake was too cold and I screamed the whole way in and I would do it again tomorrow.", author:"citrus.tide", time:"3d ago", read:"1 min" },
+    { mood:"sad", icon:"🕯️", title:"The last voicemail I have of him", excerpt:"Nineteen seconds, mostly about parking. I have listened to it more times than I'll admit.", author:"lowember", time:"4d ago", read:"2 min" },
+  ];
+
+  const feedEl = document.getElementById('feed');
+  const moodButtons = document.querySelectorAll('.mood-btn');
+  let activeMoods = new Set();
+
+  function render(){
+    const filtered = activeMoods.size === 0
+      ? posts
+      : posts.filter(p => activeMoods.has(p.mood));
+
+    feedEl.innerHTML = "";
+
+    if(filtered.length === 0){
+      feedEl.innerHTML = `<div class="empty-state"><strong>Nothing here yet</strong>try another mood, or clear your filters.</div>`;
+      return;
+    }
+
+    filtered.forEach((p, i) => {
+      const card = document.createElement('article');
+      card.className = `post mood-${p.mood}`;
+      card.style.animationDelay = (i * 0.04) + "s";
+      card.innerHTML = `
+        <div class="thumb">${p.icon}</div>
+        <div class="post-body">
+          <span class="tag-chip">${p.mood}</span>
+          <h3>${p.title}</h3>
+          <p>${p.excerpt}</p>
+          <div class="meta"><span>@${p.author}</span><span>·</span><span>${p.time}</span><span>·</span><span>${p.read} read</span></div>
+        </div>
+      `;
+      feedEl.appendChild(card);
+    });
+  }
+
+  moodButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const mood = btn.dataset.mood;
+      if(activeMoods.has(mood)){
+        activeMoods.delete(mood);
+        btn.classList.remove('active');
+      } else {
+        activeMoods.add(mood);
+        btn.classList.add('active');
+      }
+      render();
+    });
+  });
+
+  render();
+</script>
+
+</body>
+</html>
