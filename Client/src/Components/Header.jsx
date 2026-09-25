@@ -11,11 +11,11 @@ const Header = () => {
                     <img src={assets.star_icon} className = 'w-2.5' alt="" />
                 </div>
                 <h1 className='mt-15 text-3xl sm:text-6xl font-semibold sm:leading-16 text-gray-700 '>                    
-                    Your Own <span className='text-primary'>Blogging</span> Platform!                                                              
-                    <h3 className='text-2xl sm:text-4xl font-light sm:leading-16 text-gray-700'>
-                        Your secrecy is safer here!
-                    </h3>
+                    Your Own <span className='text-primary'>Blogging</span> Platform!                                                                                  
                 </h1>
+                <h3 className='text-2xl sm:text-4xl font-light sm:leading-16 text-gray-700'>
+                        Your secrecy is safer here!
+                </h3>
 
                 <p className='my-6 sm:my-8 max-w-2xl m-auto max-sm:text-xs'>
                     This is your space to think out loud, to share what matters, and to write without
