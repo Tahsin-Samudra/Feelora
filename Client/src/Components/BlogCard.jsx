@@ -9,12 +9,12 @@ const BlogCard = ({blog}) => {
     const navigate = useNavigate()
 
     return (
-        <div onClick={() => navigate(`/blog/${_id}`)} className='w-full rounded-lg overflow-hidden shadow hover:scale-102 hover:shadow-primary/25 duration-300 cursor-pointer'>
-            <img src={image} alt="" className='aspect-video' />
-            <span className='ml-5 mt-4 px-3 py-1 inline-block bg-primary/20 rounded-full text-primary text-xs'>{category}</span>
-            <div className='p-5'>
-                <h5 className='mb-2 font-medium text-gray-900'>{title}</h5>                
-                <p className='mb-3 text-xs text-gray-600' dangerouslySetInnerHTML={{"__html" : description.slice(0,80)}}></p>
+        <div onClick={() => navigate(`/blog/${_id}`)} className='w-full max-w-[240px] h-[280px] rounded-lg overflow-hidden shadow hover:scale-102 hover:shadow-primary/25 duration-300 cursor-pointer'>
+            <img src={image} alt="" className='w-full h-28 object-cover'/>
+            <span className='ml-3 mt-2 px-2.5 py-0.5 inline-block bg-primary/20 rounded-full text-primary text-xs'>{category}</span>
+            <div className='p-3 pt-2'>
+                <h5 className='mb-1 font-medium text-sm text-gray-900 line-clamp-2'>{title}</h5>                
+                <p className='mb-2 text-xs text-gray-600 line-clamp-2' dangerouslySetInnerHTML={{"__html" : description.slice(0,80)}}></p>
             </div>
         </div>
     )

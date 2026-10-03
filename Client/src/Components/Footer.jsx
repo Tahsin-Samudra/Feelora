@@ -12,7 +12,17 @@ const Footer = () => {
 
             <div className='flex flex-wrap justify-between w-full md:w-[45%] gap-5'>
                 {footer_data.map((section, index) => (
-                    <div></div>
+                    <div key ={index}>                        
+                        <h3 className = 'font-semibold text-base text-gray-900 md:mb-5 mb-2'>{section.title}</h3>
+                        <ul className="text-sm space-y-1">
+                            {section.links.map((link, index) => (
+                                <li key={index}> 
+                                    <a href="#" className = "hover:underline transition">
+                                        {link}</a>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
                 ))}
             </div>
 

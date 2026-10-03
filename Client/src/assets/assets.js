@@ -245,7 +245,7 @@ export const dashboard_data = {
 
 export const footer_data = [
       {
-          title: "Quick Links",
+          title: "Feelora Links",
           links: ["Home", "Best Sellers", "Offers & Deals", "Contact Us", "FAQs"]
       },
       {
