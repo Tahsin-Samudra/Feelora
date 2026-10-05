@@ -1,6 +1,6 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import { useParams } from "react-router-dom";
-import { blog_data } from "../assets/assets";
+import { blog_data, comments_data } from "../assets/assets";
 import Navbar from "../Components/Navbar";
 import {assets} from "../assets/assets";
 import Moment from "moment";
@@ -9,15 +9,28 @@ import Moment from "moment";
 const Blog = () => {
     const {id} = useParams()
 
-    const [data, setData] = React.useState(null);
+    const [data, setData] = useState(null)
+    const [comments, setComments] = useState([])
+    
+    const [Name, setName] = useState(null)
+    const [Content, setContent] = useState(null)
 
     const fetchData = async () => {
         const data = blog_data.find(item => item._id === id)
         setData(data)
     }
 
+    const fetchComments = async () => {
+        setComments(comments_data)
+    }
+
+    const addComment = async (e) => {
+        e.preventDefault();        
+    }
+
     useEffect(() => {
         fetchData()
+        fetchComments()
     },[])
 
     return data ? (
@@ -40,6 +53,33 @@ const Blog = () => {
                 <div className='rich-text max-w-3xl mx-auto' dangerouslySetInnerHTML={{ __html: data.description }} />   
 
                 {/*Comment Section*/}
+                <div className='mt-14 mb-10 max-w-3xl mx-auto'>
+                    <p className='font-semibold mb-10'>Comments : ({comments.length})</p>
+                    <div className='flex flex-col gap-4'>
+                        {comments.map((item, index) => (
+                            <div key={index} className='relative bg-primary/2 border border-primary/5 max-w-xl p-4 rounded text-gray-600'>
+                                <div className="flex items-center gap-2 mb-2">
+                                    <img src={assets.user_icon} alt="" className = 'w-6'/>
+                                    <p className='font-medium'> {item.name} </p>
+                                </div>
+                                <p className='text-sm max-w-md ml-8'>{item.content}</p>
+                                <div className='absolute right-4 bottom-3 flex items-center gap-2 text-xs'>{Moment(item.createdAt).fromNow()}</div>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className='max-w-3xl mt-4'>
+                        <p className='font-semibold mb-4'>Leave a Comment</p>
+                        <form onsubmit={addComment} className='flex flex-col items-start gap-4 max-w-lg'>
+                            <input type="text" placeholder="Your Name" className='w-full p-2 border border-gray-300 rounded outline-none' required/>
+                            <textarea placeholder="Your Comment" className='w-full p-2 border border-gray-300 rounded outline-none h-48' required></textarea>
+
+                            <button type='submit' className='bg-primary text-white p-2 px-8 hover:scale-102 transition-all cursor-pointer'>
+                                Submit
+                            </button>
+                        </form>
+                    </div>
+                </div>
 
             </div>
 
