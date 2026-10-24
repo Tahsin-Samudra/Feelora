@@ -11,7 +11,9 @@ createRoot(document.getElementById('root')).render(
   </BrowserRouter>,  
 )
 
+
 //1 : 13 : 43
 //1 : 37 : 17
 //1 : 42 : 51
 //1 : 49 : 03
+//1 : 56 : 10

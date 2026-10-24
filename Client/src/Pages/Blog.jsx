@@ -4,6 +4,8 @@ import { blog_data, comments_data } from "../assets/assets";
 import Navbar from "../Components/Navbar";
 import {assets} from "../assets/assets";
 import Moment from "moment";
+import Footer from "../Components/Footer";
+import Loader from "../Components/Loader";  
 
 
 const Blog = () => {
@@ -71,22 +73,33 @@ const Blog = () => {
                     <div className='max-w-3xl mt-4'>
                         <p className='font-semibold mb-4'>Leave a Comment</p>
                         <form onsubmit={addComment} className='flex flex-col items-start gap-4 max-w-lg'>
-                            <input type="text" placeholder="Your Name" className='w-full p-2 border border-gray-300 rounded outline-none' required/>
-                            <textarea placeholder="Your Comment" className='w-full p-2 border border-gray-300 rounded outline-none h-48' required></textarea>
+                            <input onchange={(e) => setName(e.target.value)} value={Name} type="text" placeholder="Your Name" className='w-full p-2 border border-gray-300 rounded outline-none' required/>
+                            <textarea onchange={(e) => setContent(e.target.value)} value={Content} placeholder="Your Comment" className='w-full p-2 border border-gray-300 rounded outline-none h-48' required></textarea>
 
                             <button type='submit' className='bg-primary text-white p-2 px-8 hover:scale-102 transition-all cursor-pointer'>
                                 Submit
                             </button>
                         </form>
                     </div>
+                    {/* Share Section */}
+                    <div className='my-24 max-w-3xl mx-auto'>
+                        <p className = 'font-semibold my-4'>Share this article on Social Media</p>
+                        <div className = 'flex'>
+                            <img src={assets.facebook_icon} alt="Facebook" className = 'w-8 h-8 mx-2 cursor-pointer'/>
+                            <img src={assets.twitter_icon} alt="Twitter" className = 'w-8 h-8 mx-2 cursor-pointer'/>
+                            <img src={assets.googleplus_icon} alt="Google+" className = 'w-8 h-8 mx-2 cursor-pointer'/>
+                        </div>
+                    </div>                    
                 </div>
+                <Footer/> 
 
             </div>
 
         </div>
     ) : (
         <div>
-            <h1>Blog not found</h1>
+            <h1>Loading...</h1>
+            <Loader/>
         </div>
     )
 }
